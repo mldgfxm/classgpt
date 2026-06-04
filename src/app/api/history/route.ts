@@ -2,6 +2,8 @@ import { db } from "@/lib/db";
 import { feedbackHistory } from "@/lib/db/schema";
 import { desc, eq } from "drizzle-orm";
 
+export const runtime = "edge";
+
 export async function GET() {
   try {
     const entries = await db

@@ -1,6 +1,8 @@
 import { feedbackFormSchema } from "@/modules/feedback/schema";
 import { buildSystemPrompt, buildUserPrompt } from "@/modules/feedback/prompt";
 
+export const runtime = "edge";
+
 export async function POST(req: Request) {
   try {
     const body = await req.json();
@@ -25,7 +27,7 @@ export async function POST(req: Request) {
       );
     }
 
-    const systemPrompt = buildSystemPrompt();
+    const systemPrompt = buildSystemPrompt(parsed.data.wordCount);
     const userPrompt = buildUserPrompt(parsed.data);
 
     const baseURL = process.env.OPENAI_BASE_URL || "https://api.deepseek.com/v1";

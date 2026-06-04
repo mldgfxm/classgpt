@@ -2,6 +2,8 @@ import { db } from "@/lib/db";
 import { feedbackHistory } from "@/lib/db/schema";
 import { eq } from "drizzle-orm";
 
+export const runtime = "edge";
+
 export async function DELETE(
   _req: Request,
   { params }: { params: Promise<{ id: string }> }

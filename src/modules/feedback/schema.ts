@@ -14,6 +14,7 @@ export const feedbackFormSchema = z.object({
   teachingContent: z.string().default(""),
   errorAnalysis: z.string().default(""),
   keywords: z.array(z.string()).default([]),
+  wordCount: z.string().default("300-500"),
   assessments: z.object({
     mastery: z.string().default(""),
     engagement: z.string().default(""),

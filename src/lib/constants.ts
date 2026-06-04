@@ -53,3 +53,10 @@ export const ASSESSMENT_GROUPS = [
 ] as const;
 
 export type AssessmentName = (typeof ASSESSMENT_GROUPS)[number]["name"];
+
+export const WORD_COUNT_OPTIONS = [
+  { value: "150-250", label: "简短 (150-250字)" },
+  { value: "300-500", label: "适中 (300-500字)" },
+  { value: "500-800", label: "详细 (500-800字)" },
+  { value: "800-1200", label: "超详细 (800-1200字)" },
+] as const;

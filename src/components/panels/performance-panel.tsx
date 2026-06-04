@@ -3,10 +3,17 @@
 import { useFormContext } from "react-hook-form";
 import { PanelHeader } from "@/components/layout/panel-header";
 import { AssessmentGroup } from "@/components/forms/assessment-group";
-import { ASSESSMENT_GROUPS } from "@/lib/constants";
+import { ASSESSMENT_GROUPS, WORD_COUNT_OPTIONS } from "@/lib/constants";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Sparkles, Loader2 } from "lucide-react";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 interface PerformancePanelProps {
   onGenerate: () => void;
@@ -28,6 +35,26 @@ export function PerformancePanel({
 
       <ScrollArea className="flex-1">
         <div className="p-6 space-y-4">
+          {/* 字数选择 */}
+          <div className="space-y-2">
+            <label className="text-sm font-medium text-foreground">生成字数</label>
+            <Select
+              value={form.watch("wordCount") || "300-500"}
+              onValueChange={(v) => form.setValue("wordCount", v)}
+            >
+              <SelectTrigger className="w-full">
+                <SelectValue placeholder="选择字数范围" />
+              </SelectTrigger>
+              <SelectContent>
+                {WORD_COUNT_OPTIONS.map((option) => (
+                  <SelectItem key={option.value} value={option.value}>
+                    {option.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+
           {ASSESSMENT_GROUPS.map((group) => (
             <AssessmentGroup
               key={group.name}

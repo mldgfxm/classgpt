@@ -39,6 +39,7 @@ export function FeedbackEditor() {
       teachingContent: "",
       errorAnalysis: "",
       keywords: [],
+      wordCount: "300-500",
       assessments: {
         mastery: "",
         engagement: "",

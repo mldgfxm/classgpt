@@ -3,7 +3,7 @@ import { Toaster } from "@/components/ui/sonner";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "AI 课后反馈助手",
+  title: "杨益的小帮手",
   description:
     "面向培训机构和家教老师的AI课后反馈生成工具，30秒生成真实、具体的家长沟通反馈",
 };
