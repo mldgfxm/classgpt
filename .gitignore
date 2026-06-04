@@ -23,6 +23,9 @@
 # misc
 .DS_Store
 *.pem
+auth
+auth-wal
+image.png
 
 # debug
 npm-debug.log*
