@@ -28,31 +28,31 @@ export function HistoryItemCard({
       : entry.result;
 
   return (
-    <Card className="hover:shadow-sm transition-shadow">
+    <Card className="hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 group">
       <CardContent className="p-4">
         <div className="flex items-start justify-between gap-3">
-          <div className="flex-1 min-w-0 space-y-1">
+          <div className="flex-1 min-w-0 space-y-1.5">
             <div className="flex items-center gap-2">
               <span className="font-medium text-sm truncate">
                 {entry.studentName}
               </span>
-              <span className="text-xs text-muted-foreground shrink-0">
+              <span className="text-[11px] text-muted-foreground shrink-0 px-1.5 py-0.5 bg-muted rounded-full">
                 {entry.gradeLevel}{entry.grade} · {entry.subject}
               </span>
             </div>
-            <p className="text-xs text-muted-foreground line-clamp-2">
+            <p className="text-xs text-muted-foreground line-clamp-2 leading-relaxed">
               {preview}
             </p>
-            <p className="text-[10px] text-muted-foreground/60">
+            <p className="text-[10px] text-muted-foreground/50">
               {entry.createdAt}
             </p>
           </div>
 
-          <div className="flex items-center gap-1 shrink-0">
+          <div className="flex items-center gap-0.5 shrink-0 opacity-0 group-hover:opacity-100 transition-opacity">
             <Button
               variant="ghost"
               size="icon"
-              className="h-8 w-8"
+              className="h-7 w-7"
               onClick={onLoad}
               title="加载此条记录"
             >
@@ -61,7 +61,7 @@ export function HistoryItemCard({
             <Button
               variant="ghost"
               size="icon"
-              className="h-8 w-8 text-destructive hover:text-destructive"
+              className="h-7 w-7 text-destructive hover:text-destructive"
               onClick={handleDelete}
               title="删除"
             >

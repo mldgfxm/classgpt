@@ -75,9 +75,13 @@ export function PerformancePanel({
         <Button
           onClick={onGenerate}
           disabled={isGenerating}
-          className="w-full h-11 text-base gap-2"
+          className="relative w-full h-11 text-base gap-2 bg-gradient-to-r from-primary to-emerald-600 hover:from-primary/90 hover:to-emerald-600/90 shadow-md hover:shadow-lg transition-all duration-200 hover:scale-[1.01] active:scale-[0.99] overflow-hidden"
           size="lg"
         >
+          {/* Shimmer 光泽效果 */}
+          {!isGenerating && (
+            <div className="absolute inset-0 animate-shimmer pointer-events-none" />
+          )}
           {isGenerating ? (
             <>
               <Loader2 className="h-4 w-4 animate-spin" />
@@ -90,8 +94,15 @@ export function PerformancePanel({
             </>
           )}
         </Button>
-        <p className="text-[10px] text-muted-foreground text-center mt-2">
-          Ctrl + Enter 快速生成
+        <p className="text-[10px] text-muted-foreground text-center mt-2.5 flex items-center justify-center gap-1">
+          <kbd className="px-1.5 py-0.5 text-[9px] font-mono bg-muted rounded border border-border/60">
+            Ctrl
+          </kbd>
+          <span>+</span>
+          <kbd className="px-1.5 py-0.5 text-[9px] font-mono bg-muted rounded border border-border/60">
+            Enter
+          </kbd>
+          <span className="ml-0.5">快速生成</span>
         </p>
       </div>
     </div>

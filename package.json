@@ -6,7 +6,10 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "pages:build": "npx opennextjs-cloudflare build",
+    "pages:deploy": "npx opennextjs-cloudflare deploy",
+    "pages:dev": "npx wrangler dev .open-next/worker.js --compatibility-flags=nodejs_compat"
   },
   "dependencies": {
     "@ai-sdk/openai": "^3.0.67",
@@ -34,6 +37,7 @@
     "zustand": "^5.0.14"
   },
   "devDependencies": {
+    "@opennextjs/cloudflare": "^1.19.11",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
@@ -42,6 +46,7 @@
     "eslint": "^9",
     "eslint-config-next": "16.2.6",
     "tailwindcss": "^4",
-    "typescript": "^5"
+    "typescript": "^5",
+    "wrangler": "^4.97.0"
   }
 }

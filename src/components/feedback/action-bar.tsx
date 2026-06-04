@@ -112,13 +112,13 @@ export function ActionBar({
   if (!completion && !isLoading) return null;
 
   return (
-    <div className="p-4 border-t bg-card flex items-center gap-2 flex-wrap">
+    <div className="p-4 border-t bg-card/80 backdrop-blur-sm flex items-center gap-2 flex-wrap animate-fade-in-up">
       {isLoading ? (
         <Button
           variant="outline"
           size="sm"
           onClick={onStop}
-          className="gap-1.5"
+          className="gap-1.5 border-destructive/30 text-destructive hover:bg-destructive/10"
         >
           <Square className="h-3.5 w-3.5" />
           停止生成
@@ -126,14 +126,13 @@ export function ActionBar({
       ) : (
         <>
           <Button
-            variant="outline"
             size="sm"
             onClick={handleCopy}
             disabled={!completion}
-            className="gap-1.5"
+            className="gap-1.5 bg-gradient-to-r from-primary to-emerald-600 hover:from-primary/90 hover:to-emerald-600/90 shadow-sm"
           >
             {copied ? (
-              <Check className="h-3.5 w-3.5 text-green-600" />
+              <Check className="h-3.5 w-3.5" />
             ) : (
               <Copy className="h-3.5 w-3.5" />
             )}
@@ -179,7 +178,7 @@ export function ActionBar({
             variant="ghost"
             size="sm"
             onClick={onOpenHistory}
-            className="gap-1.5 ml-auto"
+            className="gap-1.5 ml-auto hover:bg-muted"
           >
             <History className="h-3.5 w-3.5" />
             历史记录

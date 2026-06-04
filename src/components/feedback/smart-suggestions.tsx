@@ -31,19 +31,19 @@ export function SmartSuggestions({ formData }: SmartSuggestionsProps) {
   if (items.length === 0) return null;
 
   return (
-    <div className="rounded-lg border bg-card p-3 space-y-2">
-      <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
+    <div className="rounded-xl border bg-gradient-to-br from-card to-muted/30 p-3.5 space-y-2.5 animate-fade-in-up">
+      <div className="flex items-center gap-1.5 text-xs text-primary font-medium">
         <Lightbulb className="h-3.5 w-3.5" />
         本次反馈生成依据
       </div>
-      <div className="flex flex-wrap gap-1">
+      <div className="flex flex-wrap gap-1.5">
         {items.map((item) => (
-          <Badge key={item} variant="secondary" className="text-xs">
+          <Badge key={item} variant="secondary" className="text-xs bg-primary/5 border-primary/10 hover:bg-primary/10 transition-colors">
             {item}
           </Badge>
         ))}
         {assessmentLabels.map((label) => (
-          <Badge key={label} variant="outline" className="text-xs">
+          <Badge key={label} variant="outline" className="text-xs border-primary/15">
             {label}
           </Badge>
         ))}

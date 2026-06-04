@@ -139,7 +139,7 @@ export function FeedbackEditor() {
   if (!mounted) {
     return (
       <FormProvider {...form}>
-        <div className="h-screen" />
+        <div className="flex-1" />
       </FormProvider>
     );
   }
@@ -148,7 +148,7 @@ export function FeedbackEditor() {
     <FormProvider {...form}>
       {isDesktop ? (
         /* Desktop: 3-column layout */
-        <div className="h-screen">
+        <div className="flex-1 overflow-hidden">
           <ThreeColumnShell
             leftPanel={leftPanel}
             middlePanel={middlePanel}
@@ -157,8 +157,8 @@ export function FeedbackEditor() {
         </div>
       ) : (
         /* Mobile: Tab layout */
-        <div className="h-screen flex flex-col">
-          <Tabs value={activeTab} onValueChange={setActiveTab} className="flex-1 flex flex-col">
+        <div className="flex-1 flex flex-col overflow-hidden">
+          <Tabs value={activeTab} onValueChange={setActiveTab} className="flex-1 flex flex-col overflow-hidden">
             <TabsList className="grid grid-cols-3 mx-2 mt-2 shrink-0">
               <TabsTrigger value="info" className="text-xs">课堂信息</TabsTrigger>
               <TabsTrigger value="performance" className="text-xs">课堂表现</TabsTrigger>
