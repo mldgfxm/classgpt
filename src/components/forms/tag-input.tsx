@@ -3,7 +3,6 @@
 import { useState, type KeyboardEvent } from "react";
 import { useFormContext } from "react-hook-form";
 import { Badge } from "@/components/ui/badge";
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { X } from "lucide-react";
 import { toast } from "sonner";
@@ -53,12 +52,12 @@ export function TagInput() {
           ({keywords.length}/10)
         </span>
       </Label>
-      <div className="flex flex-wrap gap-1.5 p-2 border rounded-lg bg-background min-h-[42px] items-center">
+      <div className="flex flex-wrap gap-1.5 p-2 border rounded-lg bg-card/85 min-h-[44px] items-center shadow-sm">
         {keywords.map((tag, i) => (
           <Badge
             key={`${tag}-${i}`}
             variant="secondary"
-            className="gap-1 pr-1 cursor-default"
+            className="gap-1 pr-1 cursor-default border border-primary/10 bg-primary/8 text-primary"
           >
             {tag}
             <button

@@ -112,7 +112,7 @@ export function ActionBar({
   if (!completion && !isLoading) return null;
 
   return (
-    <div className="p-4 border-t bg-card/80 backdrop-blur-sm flex items-center gap-2 flex-wrap animate-fade-in-up">
+    <div className="p-4 border-t bg-card/86 backdrop-blur-sm flex items-center gap-2 flex-wrap animate-fade-in-up">
       {isLoading ? (
         <Button
           variant="outline"
@@ -129,7 +129,7 @@ export function ActionBar({
             size="sm"
             onClick={handleCopy}
             disabled={!completion}
-            className="gap-1.5 bg-gradient-to-r from-primary to-emerald-600 hover:from-primary/90 hover:to-emerald-600/90 shadow-sm"
+            className="gap-1.5 bg-primary hover:bg-primary/90 shadow-sm"
           >
             {copied ? (
               <Check className="h-3.5 w-3.5" />

@@ -46,3 +46,9 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# archives
+*.tar.gz
+
+# claude code agents
+.agents/

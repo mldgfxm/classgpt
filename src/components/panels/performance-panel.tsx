@@ -27,22 +27,21 @@ export function PerformancePanel({
   const form = useFormContext();
 
   return (
-    <div className="flex flex-col h-full bg-card border-r">
+    <div className="glass-panel flex flex-col h-full overflow-hidden rounded-lg border">
       <PanelHeader
         title="课堂表现"
         subtitle="点击选择每项评估（可反选取消）"
       />
 
       <ScrollArea className="flex-1">
-        <div className="p-6 space-y-4">
-          {/* 字数选择 */}
-          <div className="space-y-2">
+        <div className="p-5 space-y-4">
+          <div className="space-y-2 rounded-lg border bg-background/70 p-4 shadow-sm">
             <label className="text-sm font-medium text-foreground">生成字数</label>
             <Select
               value={form.watch("wordCount") || "300-500"}
               onValueChange={(v) => form.setValue("wordCount", v)}
             >
-              <SelectTrigger className="w-full">
+              <SelectTrigger className="w-full bg-card/85">
                 <SelectValue placeholder="选择字数范围" />
               </SelectTrigger>
               <SelectContent>
@@ -56,29 +55,28 @@ export function PerformancePanel({
           </div>
 
           {ASSESSMENT_GROUPS.map((group) => (
-            <AssessmentGroup
-              key={group.name}
-              label={group.label}
-              name={group.name}
-              options={group.options}
-              value={form.watch(`assessments.${group.name}`) || ""}
-              onChange={(v) =>
-                form.setValue(`assessments.${group.name}`, v)
-              }
-            />
+            <div key={group.name} className="rounded-lg border bg-background/62 p-4 shadow-sm">
+              <AssessmentGroup
+                label={group.label}
+                name={group.name}
+                options={group.options}
+                value={form.watch(`assessments.${group.name}`) || ""}
+                onChange={(v) =>
+                  form.setValue(`assessments.${group.name}`, v)
+                }
+              />
+            </div>
           ))}
         </div>
       </ScrollArea>
 
-      {/* 生成按钮 */}
-      <div className="p-4 border-t bg-card">
+      <div className="p-4 border-t bg-card/82 backdrop-blur-sm">
         <Button
           onClick={onGenerate}
           disabled={isGenerating}
-          className="relative w-full h-11 text-base gap-2 bg-gradient-to-r from-primary to-emerald-600 hover:from-primary/90 hover:to-emerald-600/90 shadow-md hover:shadow-lg transition-all duration-200 hover:scale-[1.01] active:scale-[0.99] overflow-hidden"
+          className="relative w-full h-12 text-base gap-2 bg-[linear-gradient(135deg,oklch(0.42_0.1_172),oklch(0.55_0.12_245))] hover:opacity-95 shadow-lg shadow-primary/18 transition-all duration-200 hover:scale-[1.01] active:scale-[0.99] overflow-hidden"
           size="lg"
         >
-          {/* Shimmer 光泽效果 */}
           {!isGenerating && (
             <div className="absolute inset-0 animate-shimmer pointer-events-none" />
           )}

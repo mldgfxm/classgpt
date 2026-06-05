@@ -21,7 +21,7 @@ export function SubjectSelect() {
         value={form.watch("subject") || ""}
         onValueChange={(v) => form.setValue("subject", v)}
       >
-        <SelectTrigger>
+        <SelectTrigger className="w-full bg-card/85">
           <SelectValue placeholder="选择学科" />
         </SelectTrigger>
         <SelectContent>

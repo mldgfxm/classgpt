@@ -23,14 +23,14 @@ export function ButtonGroup({
           type="button"
           onClick={() => onChange(option === value ? "" : option)}
           className={cn(
-            "px-3.5 py-1.5 text-sm rounded-full border transition-all duration-200",
-            "hover:border-primary/60 hover:bg-primary/5",
+            "px-3 py-2 text-sm rounded-lg border transition-all duration-200",
+            "hover:border-primary/60 hover:bg-primary/7",
             "active:scale-[0.97]",
             "animate-fade-in-up",
             `stagger-${Math.min(i + 1, 5)}`,
             value === option
-              ? "bg-gradient-to-r from-primary to-emerald-600 text-primary-foreground border-primary shadow-md shadow-primary/20"
-              : "bg-card text-foreground border-border hover:shadow-sm"
+              ? "bg-primary text-primary-foreground border-primary shadow-md shadow-primary/20"
+              : "bg-card/85 text-foreground border-border hover:shadow-sm"
           )}
         >
           {option}

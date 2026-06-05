@@ -32,7 +32,13 @@ export async function POST(req: Request) {
 
     const baseURL = process.env.OPENAI_BASE_URL || "https://api.deepseek.com/v1";
     const apiKey = process.env.OPENAI_API_KEY;
-    const model = process.env.AI_MODEL || "deepseek-chat";
+    if (!apiKey) {
+      return Response.json(
+        { error: "AI 服务未配置，请设置 OPENAI_API_KEY" },
+        { status: 500 }
+      );
+    }
+    const model = process.env.AI_MODEL || process.env.OPENAI_MODEL || "deepseek-chat";
 
     const resp = await fetch(`${baseURL}/chat/completions`, {
       method: "POST",

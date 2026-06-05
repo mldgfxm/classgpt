@@ -1,0 +1,15 @@
+services:
+  classgpt:
+    build: .
+    container_name: classgpt
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env.local
+    volumes:
+      - ./data:/app/data
+    deploy:
+      resources:
+        limits:
+          memory: 1G

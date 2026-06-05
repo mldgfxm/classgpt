@@ -27,18 +27,16 @@ export function ResultPanel({
   formData,
 }: ResultPanelProps) {
   return (
-    <div className="flex flex-col h-full bg-background">
+    <div className="desk-shadow flex flex-col h-full overflow-hidden rounded-lg border bg-background/80">
       <PanelHeader
         title="生成结果"
         subtitle={completion ? "可编辑、复制或重新生成" : "填写信息后点击生成"}
       />
 
       <ScrollArea className="flex-1">
-        <div className="p-6 space-y-4">
-          {/* 智能建议 */}
+        <div className="p-5 space-y-4">
           {completion && <SmartSuggestions formData={formData} />}
 
-          {/* 反馈输出 */}
           <FeedbackOutput
             completion={completion}
             isLoading={isLoading}
@@ -47,7 +45,6 @@ export function ResultPanel({
         </div>
       </ScrollArea>
 
-      {/* 操作栏 */}
       <ActionBar
         completion={completion}
         isLoading={isLoading}

@@ -27,12 +27,12 @@ export function GradeSelector() {
   return (
     <div className="space-y-2">
       <Label className="text-sm font-medium">学段 / 年级</Label>
-      <div className="flex gap-2">
+      <div className="grid grid-cols-2 gap-2">
         <Select
           value={gradeLevel || ""}
           onValueChange={(v) => form.setValue("gradeLevel", v)}
         >
-          <SelectTrigger className="flex-1">
+          <SelectTrigger className="w-full bg-card/85">
             <SelectValue placeholder="选择学段" />
           </SelectTrigger>
           <SelectContent>
@@ -49,7 +49,7 @@ export function GradeSelector() {
           onValueChange={(v) => form.setValue("grade", v)}
           disabled={!gradeLevel}
         >
-          <SelectTrigger className="flex-1">
+          <SelectTrigger className="w-full bg-card/85">
             <SelectValue placeholder="选择年级" />
           </SelectTrigger>
           <SelectContent>

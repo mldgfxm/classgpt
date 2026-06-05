@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useCallback, useEffect } from "react";
-import { useForm, FormProvider } from "react-hook-form";
+import { useForm, FormProvider, useWatch } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useCompletion } from "@ai-sdk/react";
 import { ThreeColumnShell } from "@/components/layout/three-column-shell";
@@ -12,21 +12,12 @@ import { HistoryDrawer } from "@/components/history/history-drawer";
 import { feedbackFormSchema, type FeedbackFormData } from "@/modules/feedback/schema";
 import { toast } from "sonner";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useMediaQuery } from "@/hooks/use-media-query";
 
 export function FeedbackEditor() {
   const [historyOpen, setHistoryOpen] = useState(false);
   const [activeTab, setActiveTab] = useState("info");
-  const [isDesktop, setIsDesktop] = useState(false);
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    const mql = window.matchMedia("(min-width: 768px)");
-    setIsDesktop(mql.matches);
-    setMounted(true);
-    const handler = (e: MediaQueryListEvent) => setIsDesktop(e.matches);
-    mql.addEventListener("change", handler);
-    return () => mql.removeEventListener("change", handler);
-  }, []);
+  const isDesktop = useMediaQuery("(min-width: 768px)");
 
   const form = useForm<FeedbackFormData>({
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -61,27 +52,18 @@ export function FeedbackEditor() {
     },
   });
 
+  const formData = useWatch({ control: form.control }) as FeedbackFormData;
+
   const handleGenerate = useCallback(() => {
-    const data = form.getValues();
-    // 至少需要学生姓名
-    if (!data.studentName.trim()) {
-      toast.warning("请至少填写学生姓名");
-      return;
-    }
-    // Build prompt from form data
-    const body: Record<string, unknown> = {
-      studentName: data.studentName,
-      gradeLevel: data.gradeLevel || "",
-      grade: data.grade || "",
-      subject: data.subject || "",
-      teachingContent: data.teachingContent,
-      errorAnalysis: data.errorAnalysis,
-      keywords: data.keywords,
-      assessments: data.assessments,
-    };
-    complete(JSON.stringify(body));
-    // On mobile, switch to result tab
-    setActiveTab("result");
+    void form.handleSubmit(
+      (data) => {
+        complete(JSON.stringify(data));
+        setActiveTab("result");
+      },
+      () => {
+        toast.warning("请先完善必填信息");
+      }
+    )();
   }, [form, complete]);
 
   const handleRegenerate = useCallback(() => {
@@ -131,18 +113,9 @@ export function FeedbackEditor() {
       onStop={stop}
       setCompletion={setCompletion}
       onOpenHistory={() => setHistoryOpen(true)}
-      formData={form.getValues()}
+      formData={formData}
     />
   );
-
-  // 在客户端挂载前不渲染，避免 SSR 与客户端布局不一致
-  if (!mounted) {
-    return (
-      <FormProvider {...form}>
-        <div className="flex-1" />
-      </FormProvider>
-    );
-  }
 
   return (
     <FormProvider {...form}>

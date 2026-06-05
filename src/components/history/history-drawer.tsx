@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect } from "react";
 import {
   Dialog,
   DialogContent,
@@ -10,7 +10,6 @@ import {
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { HistoryList } from "./history-list";
 import { useHistoryStore, type HistoryEntry } from "@/stores/history-store";
-import { Loader2 } from "lucide-react";
 
 interface HistoryDrawerProps {
   open: boolean;
@@ -20,26 +19,28 @@ interface HistoryDrawerProps {
 
 export function HistoryDrawer({ open, onClose, onLoad }: HistoryDrawerProps) {
   const { entries, setEntries, removeEntry } = useHistoryStore();
-  const [loading, setLoading] = useState(false);
+
+  const loadHistory = useCallback(async () => {
+    try {
+      const res = await fetch("/api/history");
+      const data = await res.json();
+      setEntries(
+        data.entries.map((e: Record<string, unknown>) => ({
+          ...e,
+          keywords: parseJsonSafe(e.keywords as string, []),
+          assessments: parseJsonSafe(e.assessments as string, {}),
+        }))
+      );
+    } catch (error) {
+      console.error(error);
+    }
+  }, [setEntries]);
 
   useEffect(() => {
     if (open) {
-      setLoading(true);
-      fetch("/api/history")
-        .then((res) => res.json())
-        .then((data) => {
-          setEntries(
-            data.entries.map((e: Record<string, unknown>) => ({
-              ...e,
-              keywords: parseJsonSafe(e.keywords as string, []),
-              assessments: parseJsonSafe(e.assessments as string, {}),
-            }))
-          );
-        })
-        .catch(console.error)
-        .finally(() => setLoading(false));
+      void loadHistory();
     }
-  }, [open, setEntries]);
+  }, [loadHistory, open]);
 
   const handleDelete = async (id: number) => {
     try {
@@ -57,19 +58,13 @@ export function HistoryDrawer({ open, onClose, onLoad }: HistoryDrawerProps) {
           <DialogTitle className="text-lg">历史记录</DialogTitle>
         </DialogHeader>
 
-        {loading ? (
-          <div className="flex-1 flex items-center justify-center">
-            <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
-          </div>
-        ) : (
-          <ScrollArea className="flex-1 -mx-6 px-6">
-            <HistoryList
-              entries={entries}
-              onLoad={onLoad}
-              onDelete={handleDelete}
-            />
-          </ScrollArea>
-        )}
+        <ScrollArea className="flex-1 -mx-6 px-6">
+          <HistoryList
+            entries={entries}
+            onLoad={onLoad}
+            onDelete={handleDelete}
+          />
+        </ScrollArea>
       </DialogContent>
     </Dialog>
   );

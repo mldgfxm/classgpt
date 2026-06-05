@@ -1,7 +1,6 @@
 "use client";
 
 import { Label } from "@/components/ui/label";
-import { Separator } from "@/components/ui/separator";
 import { ButtonGroup } from "./button-group";
 
 interface AssessmentGroupProps {
@@ -20,9 +19,8 @@ export function AssessmentGroup({
 }: AssessmentGroupProps) {
   return (
     <div className="space-y-2.5">
-      <Label className="text-sm font-medium">{label}</Label>
+      <Label className="text-sm font-semibold">{label}</Label>
       <ButtonGroup options={options} value={value} onChange={onChange} />
-      <Separator className="mt-3" />
     </div>
   );
 }

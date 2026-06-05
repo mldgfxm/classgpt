@@ -27,3 +27,11 @@ export const feedbackFormSchema = z.object({
 });
 
 export type FeedbackFormData = z.infer<typeof feedbackFormSchema>;
+
+export const feedbackHistoryCreateSchema = feedbackFormSchema.omit({
+  wordCount: true,
+}).extend({
+  result: z.string().min(1, "反馈内容不能为空"),
+});
+
+export type FeedbackHistoryCreateData = z.infer<typeof feedbackHistoryCreateSchema>;

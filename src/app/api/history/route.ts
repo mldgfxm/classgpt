@@ -1,6 +1,7 @@
 import { db } from "@/lib/db";
 import { feedbackHistory } from "@/lib/db/schema";
-import { desc, eq } from "drizzle-orm";
+import { feedbackHistoryCreateSchema } from "@/modules/feedback/schema";
+import { desc } from "drizzle-orm";
 
 export const runtime = "edge";
 
@@ -22,19 +23,29 @@ export async function GET() {
 export async function POST(req: Request) {
   try {
     const body = await req.json();
+    const parsed = feedbackHistoryCreateSchema.safeParse(body);
+
+    if (!parsed.success) {
+      return Response.json(
+        { error: "历史记录数据无效", details: parsed.error.flatten() },
+        { status: 400 }
+      );
+    }
+
+    const data = parsed.data;
 
     const entry = await db
       .insert(feedbackHistory)
       .values({
-        studentName: body.studentName,
-        gradeLevel: body.gradeLevel,
-        grade: body.grade,
-        subject: body.subject,
-        teachingContent: body.teachingContent || "",
-        errorAnalysis: body.errorAnalysis || "",
-        keywords: JSON.stringify(body.keywords || []),
-        assessments: JSON.stringify(body.assessments || {}),
-        result: body.result,
+        studentName: data.studentName,
+        gradeLevel: data.gradeLevel,
+        grade: data.grade,
+        subject: data.subject,
+        teachingContent: data.teachingContent,
+        errorAnalysis: data.errorAnalysis,
+        keywords: JSON.stringify(data.keywords),
+        assessments: JSON.stringify(data.assessments),
+        result: data.result,
       })
       .returning();
 

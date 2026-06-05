@@ -13,7 +13,7 @@
 | AI | Vercel AI SDK + DeepSeek/OpenAI 兼容 API，SSE 流式生成 |
 | 数据库 | SQLite (本地) / Turso (生产) + Drizzle ORM |
 | 状态管理 | Zustand (历史记录) |
-| 部署 | Cloudflare Pages |
+| 部署 | Cloudflare Workers + OpenNext |
 
 ## 功能特性
 
@@ -44,44 +44,53 @@ npm run dev
 # AI API 配置
 OPENAI_API_KEY=your_api_key
 OPENAI_BASE_URL=https://api.deepseek.com
-OPENAI_MODEL=deepseek-chat
+AI_MODEL=deepseek-chat
 
 # Turso 数据库（生产环境）
 TURSO_DATABASE_URL=your_turso_url
 TURSO_AUTH_TOKEN=your_turso_token
 ```
 
-## 部署到 Cloudflare Pages
+## 部署到 Cloudflare Workers
 
-### 方式一：CLI 部署
+本项目的生产部署方式是 **Cloudflare Workers + OpenNext**。不要使用传统 Cloudflare Pages Git 集成部署，也不要把 `npm run dev` 当作生产运行方式。
 
 ```bash
-# 构建
+# 检查
+npm run lint
+
+# 构建 OpenNext Worker
 npm run pages:build
 
-# 部署
+# 部署到 Cloudflare Workers
 npm run pages:deploy
 ```
 
-### 方式二：Git 集成
+当前生产地址：
 
-1. 在 Cloudflare Dashboard 中创建 Pages 项目
-2. 连接 Git 仓库
-3. 配置构建设置：
-   - 构建命令: `npm run pages:build`
-   - 输出目录: `.vercel/output/static`
+```txt
+https://classgpt.mldgfxm.workers.dev
+```
 
-### 环境变量配置
+详细部署 Runbook 见 [DEPLOYMENT.md](./DEPLOYMENT.md)。
 
-在 Cloudflare Dashboard → Pages → Settings → Environment variables 中添加：
+### 生产环境变量
 
-| 变量名 | 说明 |
+生产密钥使用 Cloudflare Worker secrets 配置：
+
+| 变量名 | 说明 | 当前要求 |
 |--------|------|
-| `OPENAI_API_KEY` | AI API 密钥 |
-| `OPENAI_BASE_URL` | API 基础 URL |
-| `OPENAI_MODEL` | 模型名称 |
-| `TURSO_DATABASE_URL` | Turso 数据库 URL |
-| `TURSO_AUTH_TOKEN` | Turso 认证 Token |
+| `OPENAI_API_KEY` | AI API 密钥 | 必需 |
+| `OPENAI_BASE_URL` | API 基础 URL | 必需 |
+| `AI_MODEL` | 模型名称 | 必需 |
+| `TURSO_DATABASE_URL` | Turso 数据库 URL | 历史记录生产可用时必需 |
+| `TURSO_AUTH_TOKEN` | Turso 认证 Token | 历史记录生产可用时必需 |
+
+查看已配置 secret：
+
+```bash
+npx wrangler secret list
+```
 
 ## 项目结构
 

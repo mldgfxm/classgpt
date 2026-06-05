@@ -1,9 +1,5 @@
 import type { FeedbackFormData } from "./schema";
 
-function optional(text: string | undefined): string {
-  return text || "未填写";
-}
-
 export function buildSystemPrompt(wordCount: string = "300-500"): string {
   return `你是一名拥有10年以上经验的学科教师，同时也是孩子们的好朋友。
 
